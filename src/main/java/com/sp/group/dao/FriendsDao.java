@@ -18,4 +18,6 @@ public interface FriendsDao {
 	
 	public List<String> getUpdateRecipients(String sender_email);
 	
+	public List<String> filterBlockingRecipients(List<String> emails, String sender_email);
+	
 }

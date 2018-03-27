@@ -1,5 +1,6 @@
 package com.sp.group.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,12 +49,15 @@ public class FriendsServiceImpl implements FriendsService {
 	@Override
 	public List<String> getUpdateRecipients(String sender_email, String text) {
 		List<String> recipientsList = friendsDao.getUpdateRecipients(sender_email);
+		List<String> recipientsListInText = new ArrayList<String>();
 		Pattern pattern = Pattern.compile("[\\w.]+@[\\w.]+");
         Matcher matcher = pattern.matcher(text);
         while(matcher.find()){
             String group = matcher.group();
-            recipientsList.add(group);
+            recipientsListInText.add(group);
         }
+        List<String> finalList = friendsDao.filterBlockingRecipients(recipientsListInText, sender_email);
+        recipientsList.addAll(finalList);
         return recipientsList;
 	}
 	

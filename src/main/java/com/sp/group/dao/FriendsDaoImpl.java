@@ -2,6 +2,7 @@ package com.sp.group.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -161,6 +162,18 @@ public class FriendsDaoImpl implements FriendsDao {
 			            }
        });
 	   return recipientsList;
+	}
+
+	@Override
+	public List<String> filterBlockingRecipients(List<String> emails, String sender_email) {
+		// remove the recipients who have blocked the sender
+		List<String> finalList = new ArrayList<String>();
+		for(String email : emails) {
+			if(!isAlreadyBlocked(email, sender_email)) {
+				finalList.add(email);
+			}
+		}
+		return finalList;
 	}
 
 }
