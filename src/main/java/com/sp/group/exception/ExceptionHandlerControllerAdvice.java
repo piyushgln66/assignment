@@ -4,12 +4,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 public class ExceptionHandlerControllerAdvice {
 
 	@ExceptionHandler(CustomException.class)
-	public ExceptionResponse handleResourceNotFound(final CustomException exception,
+	public @ResponseBody ExceptionResponse handleResourceNotFound(final CustomException exception,
 			final HttpServletRequest request) {
 
 		ExceptionResponse error = new ExceptionResponse();
